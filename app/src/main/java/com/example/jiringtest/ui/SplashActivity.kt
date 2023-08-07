@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.jiringtest.databinding.ActivitySplashBinding
+import com.example.jiringtest.ui.loginScreen.LoginActivity
 import java.util.Timer
 import java.util.TimerTask
 
@@ -19,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
         Timer().schedule(object : TimerTask() { override fun run() {
             startActivity(Intent(applicationContext, LoginActivity::class.java))
-        } }, 1000)
+        } }, 5000)
     }
 
     override fun onStop() {

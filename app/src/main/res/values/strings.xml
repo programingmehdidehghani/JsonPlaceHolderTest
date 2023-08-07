@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">JiringTest</string>
     <string name="Jiring_Title">Welcome to Jiring</string>
+    <string name="user_name_login">UserName</string>
+    <string name="txt_login">Login</string>
+
 </resources>
