@@ -1,5 +1,6 @@
 package com.example.jiringtest.ui.loginScreen;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -26,13 +27,14 @@ import retrofit2.Response;
 @HiltViewModel
 public class LoginViewModel extends ViewModel {
 
-    private CompositeDisposable compositeDisposable;
+    private final CompositeDisposable compositeDisposable;
 
     private LoginRepository loginRepository;
 
     private MutableLiveData<Response<LoginResponse>> loginResponseLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoadingLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorMessageLiveData = new MutableLiveData<>();
+    @SuppressLint("StaticFieldLeak")
     private Context context;
 
     @Inject
@@ -78,7 +80,6 @@ public class LoginViewModel extends ViewModel {
                     }));
         } else {
             errorMessageLiveData.setValue("No internet connection");
-            Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show();
         }
     }
 

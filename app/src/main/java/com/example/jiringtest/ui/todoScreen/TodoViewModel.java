@@ -36,11 +36,11 @@ public class TodoViewModel extends ViewModel {
     private MutableLiveData<Response<TodoResponse>> todoResponseLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoadingLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorMessageLiveData = new MutableLiveData<>();
-    private final Context context;
+
+    private Context context;
 
     @Inject
     public TodoViewModel(TodoRepository todoRepository, Context context) {
-        this.compositeDisposable = new CompositeDisposable();
         this.todoRepository = todoRepository;
         this.context = context;
     }
@@ -58,10 +58,16 @@ public class TodoViewModel extends ViewModel {
         return errorMessageLiveData;
     }
 
+    public void clearData() {
+        isLoadingLiveData.setValue(false);
+        todoResponseLiveData.setValue(null);
+        compositeDisposable.clear();
+    }
+
     public void todo(int userId) {
         if (isInternetConnected()) {
             isLoadingLiveData.setValue(true);
-
+            this.compositeDisposable = new CompositeDisposable();
             compositeDisposable.add(todoRepository.todo(userId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -70,6 +76,7 @@ public class TodoViewModel extends ViewModel {
                         public void onSuccess(Response<TodoResponse> response) {
                             isLoadingLiveData.setValue(false);
                             todoResponseLiveData.setValue(response);
+                            Log.i("error","rx call iis "+ response.message());
                         }
 
                         @Override
@@ -80,7 +87,6 @@ public class TodoViewModel extends ViewModel {
                     }));
         } else {
             errorMessageLiveData.setValue("No internet connection");
-            Toast.makeText(context, "No Internet", Toast.LENGTH_SHORT).show();
         }
     }
 

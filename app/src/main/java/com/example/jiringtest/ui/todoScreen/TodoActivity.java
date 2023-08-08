@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.jiringtest.adapter.ItemTodoAdapter;
 import com.example.jiringtest.databinding.ActivityTodoBinding;
 import com.example.jiringtest.model.TodoResponse;
+import com.example.jiringtest.ui.loginScreen.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,18 +46,21 @@ public class TodoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int userId = intent.getIntExtra("userId", -1);
         todoViewModel.todo(userId);
-        itemTodoAdapter = new ItemTodoAdapter();
-        binding.rvTodoInTodoActivity.setLayoutManager(new LinearLayoutManager(this));
-        binding.rvTodoInTodoActivity.setAdapter(itemTodoAdapter);
+
         todoViewModel.getTodoResponse().observe(this, new Observer<Response<TodoResponse>>() {
             @Override
             public void onChanged(Response<TodoResponse> response) {
                 binding.progressInTodoActivity.setVisibility(View.GONE);
-                if (response.isSuccessful()) {
+                if (response != null && response.isSuccessful()) {
                     TodoResponse todoResponse = response.body();
                     if (todoResponse != null) {
+                        itemTodoAdapter = new ItemTodoAdapter();
+                        binding.rvTodoInTodoActivity.setLayoutManager(new LinearLayoutManager(TodoActivity.this));
+                        binding.rvTodoInTodoActivity.setAdapter(itemTodoAdapter);
                         List<TItem> todoList = new ArrayList<>(todoResponse);
                         itemTodoAdapter.updateList(todoList);
+                        todoViewModel.clearData();
+                        Log.i("fix error", "success call is " + todoList.toString());
                     }
                 }
             }
@@ -66,6 +70,7 @@ public class TodoActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean isLoading) {
                 binding.progressInTodoActivity.setVisibility(View.VISIBLE);
+                Log.i("fix error","loading call is  ");
             }
         });
 
@@ -77,8 +82,17 @@ public class TodoActivity extends AppCompatActivity {
             }
         });
 
-
     }
+
+    private void navigateToLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
+
+
+
 
     @Override
     protected void onDestroy() {
