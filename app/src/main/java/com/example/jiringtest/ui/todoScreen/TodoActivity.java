@@ -5,6 +5,7 @@ import static com.example.jiringtest.model.TodoResponse.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.jiringtest.adapter.ItemTodoAdapter;
 import com.example.jiringtest.databinding.ActivityTodoBinding;
 import com.example.jiringtest.model.TodoResponse;
 
@@ -32,6 +34,8 @@ public class TodoActivity extends AppCompatActivity {
     @Inject
     TodoViewModel todoViewModel;
 
+    private ItemTodoAdapter itemTodoAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,9 @@ public class TodoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int userId = intent.getIntExtra("userId", -1);
         todoViewModel.todo(userId);
-
+        itemTodoAdapter = new ItemTodoAdapter();
+        binding.rvTodoInTodoActivity.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvTodoInTodoActivity.setAdapter(itemTodoAdapter);
         todoViewModel.getTodoResponse().observe(this, new Observer<Response<TodoResponse>>() {
             @Override
             public void onChanged(Response<TodoResponse> response) {
@@ -49,9 +55,8 @@ public class TodoActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     TodoResponse todoResponse = response.body();
                     if (todoResponse != null) {
-                        List<TItem> todoList = new ArrayList<>();
-                        todoList.addAll(todoResponse);
-                        Log.i("todo", "size is " + todoList.size());
+                        List<TItem> todoList = new ArrayList<>(todoResponse);
+                        itemTodoAdapter.updateList(todoList);
                     }
                 }
             }
