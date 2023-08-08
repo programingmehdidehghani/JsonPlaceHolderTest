@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, TodoActivity.class);
                             intent.putExtra("userId",id);
                             LoginActivity.this.startActivity(intent);
-                            Log.i("response", "id is " + id);
                         } else {
                             Toast.makeText(LoginActivity.this, "UserName is not exist", Toast.LENGTH_SHORT).show();
                         }
@@ -81,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(String errorMessage) {
                 binding.progressInLoginActivity.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
 

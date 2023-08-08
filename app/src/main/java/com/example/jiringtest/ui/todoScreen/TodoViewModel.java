@@ -33,7 +33,7 @@ public class TodoViewModel extends ViewModel {
 
     private TodoRepository todoRepository;
 
-    private MutableLiveData<List<TodoResponse>> loginResponseLiveData = new MutableLiveData<>();
+    private MutableLiveData<Response<TodoResponse>> todoResponseLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoadingLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorMessageLiveData = new MutableLiveData<>();
     private final Context context;
@@ -46,8 +46,8 @@ public class TodoViewModel extends ViewModel {
     }
 
 
-    public LiveData<List<TodoResponse>> getLoginResponse() {
-        return loginResponseLiveData;
+    public LiveData<Response<TodoResponse>> getTodoResponse() {
+        return todoResponseLiveData;
     }
 
     public LiveData<Boolean> getIsLoading() {
@@ -65,11 +65,11 @@ public class TodoViewModel extends ViewModel {
             compositeDisposable.add(todoRepository.todo(userId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(new DisposableSingleObserver<List<TodoResponse>>() {
+                    .subscribeWith(new DisposableSingleObserver<Response<TodoResponse>>() {
                         @Override
-                        public void onSuccess(List<TodoResponse> response) {
+                        public void onSuccess(Response<TodoResponse> response) {
                             isLoadingLiveData.setValue(false);
-                            loginResponseLiveData.setValue(response);
+                            todoResponseLiveData.setValue(response);
                         }
 
                         @Override

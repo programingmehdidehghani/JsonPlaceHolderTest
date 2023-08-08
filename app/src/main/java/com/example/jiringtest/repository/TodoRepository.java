@@ -20,7 +20,7 @@ public class TodoRepository {
         this.apiService = apiService;
     }
 
-    public Single<List<TodoResponse>> todo(int userId) {
+    public Single<Response<TodoResponse>> todo(int userId) {
         return apiService.todo(userId);
     }
 }

@@ -19,7 +19,7 @@ public interface ApiService {
     );
 
     @GET("todos")
-    Single<List<TodoResponse>> todo(
+    Single<Response<TodoResponse>> todo(
             @Query("userId") int userId
     );
 }
