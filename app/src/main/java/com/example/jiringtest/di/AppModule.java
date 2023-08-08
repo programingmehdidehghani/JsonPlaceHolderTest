@@ -26,14 +26,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @InstallIn(SingletonComponent.class)
 public class AppModule {
 
-    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
 
 
     @Provides
     @Singleton
     public ApiService provideApiService(OkHttpClient httpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl("https://jsonplaceholder.typicode.com/")
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
