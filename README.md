@@ -5,6 +5,7 @@
 + Retrofit
 + DI = Hilt
 
-![Screenshot_20230808-131145_JiringTest](https://github.com/programingmehdidehghani/JsonPlaceHolderTest/assets/74426462/a0285bed-fc70-41ca-becd-3b01bf426085)
-![Screenshot_20230808-131134_JiringTest](https://github.com/programingmehdidehghani/JsonPlaceHolderTest/assets/74426462/e7014265-8707-47ec-a0fc-3da07a15f8ad)
-![Screenshot_20230808-131152_JiringTest](https://github.com/programingmehdidehghani/JsonPlaceHolderTest/assets/74426462/bd0cf2de-9476-4eec-9292-ca1677c08c5f)
+
+![Screenshot_20230808-131145_JiringTest](https://github.com/programingmehdidehghani/JsonPlaceHolderTest/assets/74426462/addf8731-4856-4979-885d-3d3a0a49c08d)
+![Screenshot_20230808-131134_JiringTest](https://github.com/programingmehdidehghani/JsonPlaceHolderTest/assets/74426462/98635fab-d7ed-4999-9fe5-65eae02aa0e2)
+![Screenshot_20230808-131152_JiringTest](https://github.com/programingmehdidehghani/JsonPlaceHolderTest/assets/74426462/82257288-af8a-4e3c-afcb-6cc62e28ec6e)
