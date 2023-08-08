@@ -1,5 +1,6 @@
 package com.example.jiringtest.ui.loginScreen;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.jiringtest.databinding.ActivityLoginBinding;
 import com.example.jiringtest.model.LoginResponse;
+import com.example.jiringtest.ui.todoScreen.TodoActivity;
 
 import java.util.Objects;
 
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!binding.etUserNameInLoginActivity.getText().toString().equals("")){
+                    binding.progressInLoginActivity.setVisibility(View.VISIBLE);
                     loginViewModel.login(binding.etUserNameInLoginActivity.getText().toString());
                 } else {
                     Toast.makeText(LoginActivity.this, "please Enter User Name", Toast.LENGTH_SHORT).show();
@@ -49,34 +52,35 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
+                    binding.progressInLoginActivity.setVisibility(View.GONE);
                     if (response.body() != null){
                         LoginResponse loginResponse = response.body();
                         if (!loginResponse.isEmpty()) {
                             LoginResponse.LoginResponseItem loginResponseItem = loginResponse.get(0);
                             int id = loginResponseItem.getId();
+                            Intent intent = new Intent(LoginActivity.this, TodoActivity.class);
+                            intent.putExtra("userId",id);
+                            LoginActivity.this.startActivity(intent);
                             Log.i("response", "id is " + id);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "UserName is not exist", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Toast.makeText(LoginActivity.this, "UserName is not exist", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
         });
 
-        // Observe the isLoading LiveData in the LoginViewModel
         loginViewModel.getIsLoading().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isLoading) {
-                // Show/hide loading indicator based on the isLoading value
+                binding.progressInLoginActivity.setVisibility(View.VISIBLE);
             }
         });
 
-        // Observe the errorMessage LiveData in the LoginViewModel
         loginViewModel.getErrorMessage().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String errorMessage) {
-                // Display the error message to the user
+                binding.progressInLoginActivity.setVisibility(View.GONE);
             }
         });
 

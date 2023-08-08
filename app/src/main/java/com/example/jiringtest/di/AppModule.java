@@ -7,7 +7,9 @@ import android.content.Context;
 
 import com.example.jiringtest.api.ApiService;
 import com.example.jiringtest.repository.LoginRepository;
+import com.example.jiringtest.repository.TodoRepository;
 import com.example.jiringtest.ui.loginScreen.LoginViewModel;
+import com.example.jiringtest.ui.todoScreen.TodoViewModel;
 
 import javax.inject.Singleton;
 
@@ -59,5 +61,11 @@ public class AppModule {
     @Singleton
     public LoginViewModel provideLoginViewModel(LoginRepository loginRepository, Context context) {
         return new LoginViewModel(loginRepository, context);
+    }
+
+    @Provides
+    @Singleton
+    public TodoViewModel provideTodoViewModel(TodoRepository todoRepository, Context context) {
+        return new TodoViewModel(todoRepository, context);
     }
 }

@@ -45,7 +45,7 @@
         android:id="@+id/btn_login_in_activity_login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gl_bottom_btn_in_login_activity"
         android:layout_margin="8dp"
         android:text="@string/txt_login"
         app:layout_constraintTop_toBottomOf="@+id/txt_user_name_in_login_activity"
@@ -64,10 +64,18 @@
 
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_bottom_btn_in_login_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7"/>
+
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/gl_middle_screen_in_login_screen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.55"
+        app:layout_constraintGuide_percent="0.45"
         android:orientation="horizontal"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

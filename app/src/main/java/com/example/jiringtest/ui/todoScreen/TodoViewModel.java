@@ -1,4 +1,4 @@
-package com.example.jiringtest.ui.loginScreen;
+package com.example.jiringtest.ui.todoScreen;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -10,9 +10,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.jiringtest.api.ApiService;
 import com.example.jiringtest.model.LoginResponse;
+import com.example.jiringtest.model.TodoResponse;
 import com.example.jiringtest.repository.LoginRepository;
+import com.example.jiringtest.repository.TodoRepository;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -24,26 +27,26 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Response;
 
 @HiltViewModel
-public class LoginViewModel extends ViewModel {
+public class TodoViewModel extends ViewModel {
 
     private CompositeDisposable compositeDisposable;
 
-    private LoginRepository loginRepository;
+    private TodoRepository todoRepository;
 
-    private MutableLiveData<Response<LoginResponse>> loginResponseLiveData = new MutableLiveData<>();
+    private MutableLiveData<List<TodoResponse>> loginResponseLiveData = new MutableLiveData<>();
     private MutableLiveData<Boolean> isLoadingLiveData = new MutableLiveData<>();
     private MutableLiveData<String> errorMessageLiveData = new MutableLiveData<>();
-    private Context context;
+    private final Context context;
 
     @Inject
-    public LoginViewModel(LoginRepository loginRepository, Context context) {
+    public TodoViewModel(TodoRepository todoRepository, Context context) {
         this.compositeDisposable = new CompositeDisposable();
-        this.loginRepository = loginRepository;
+        this.todoRepository = todoRepository;
         this.context = context;
     }
 
 
-    public LiveData<Response<LoginResponse>> getLoginResponse() {
+    public LiveData<List<TodoResponse>> getLoginResponse() {
         return loginResponseLiveData;
     }
 
@@ -55,17 +58,16 @@ public class LoginViewModel extends ViewModel {
         return errorMessageLiveData;
     }
 
-    public void login(String userName) {
-        // Check if internet connectivity is available
+    public void todo(int userId) {
         if (isInternetConnected()) {
             isLoadingLiveData.setValue(true);
 
-            compositeDisposable.add(loginRepository.login(userName)
+            compositeDisposable.add(todoRepository.todo(userId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribeWith(new DisposableSingleObserver<Response<LoginResponse>>() {
+                    .subscribeWith(new DisposableSingleObserver<List<TodoResponse>>() {
                         @Override
-                        public void onSuccess(Response<LoginResponse> response) {
+                        public void onSuccess(List<TodoResponse> response) {
                             isLoadingLiveData.setValue(false);
                             loginResponseLiveData.setValue(response);
                         }
