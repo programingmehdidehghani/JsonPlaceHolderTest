@@ -59,8 +59,6 @@ public class TodoActivity extends AppCompatActivity {
                         binding.rvTodoInTodoActivity.setAdapter(itemTodoAdapter);
                         List<TItem> todoList = new ArrayList<>(todoResponse);
                         itemTodoAdapter.updateList(todoList);
-                        todoViewModel.clearData();
-                        Log.i("fix error", "success call is " + todoList.toString());
                     }
                 }
             }
@@ -84,15 +82,13 @@ public class TodoActivity extends AppCompatActivity {
 
     }
 
-    private void navigateToLogin() {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        finish();
-    }
-
-
-
+        finish();    }
 
     @Override
     protected void onDestroy() {

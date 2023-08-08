@@ -27,7 +27,7 @@ import retrofit2.Response;
 @HiltViewModel
 public class LoginViewModel extends ViewModel {
 
-    private final CompositeDisposable compositeDisposable;
+    private CompositeDisposable compositeDisposable;
 
     private LoginRepository loginRepository;
 
@@ -39,7 +39,6 @@ public class LoginViewModel extends ViewModel {
 
     @Inject
     public LoginViewModel(LoginRepository loginRepository, Context context) {
-        this.compositeDisposable = new CompositeDisposable();
         this.loginRepository = loginRepository;
         this.context = context;
     }
@@ -58,10 +57,9 @@ public class LoginViewModel extends ViewModel {
     }
 
     public void login(String userName) {
-        // Check if internet connectivity is available
         if (isInternetConnected()) {
             isLoadingLiveData.setValue(true);
-
+            this.compositeDisposable = new CompositeDisposable();
             compositeDisposable.add(loginRepository.login(userName)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

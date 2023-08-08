@@ -58,11 +58,6 @@ public class TodoViewModel extends ViewModel {
         return errorMessageLiveData;
     }
 
-    public void clearData() {
-        isLoadingLiveData.setValue(false);
-        todoResponseLiveData.setValue(null);
-        compositeDisposable.clear();
-    }
 
     public void todo(int userId) {
         if (isInternetConnected()) {
