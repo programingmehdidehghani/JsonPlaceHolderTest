@@ -10,6 +10,7 @@ import com.example.jiringtest.repository.LoginRepository;
 import com.example.jiringtest.repository.TodoRepository;
 import com.example.jiringtest.ui.loginScreen.LoginViewModel;
 import com.example.jiringtest.ui.todoScreen.TodoViewModel;
+import com.example.jiringtest.util.Constant;
 
 import javax.inject.Singleton;
 
@@ -32,7 +33,7 @@ public class AppModule {
     @Singleton
     public ApiService provideApiService(OkHttpClient httpClient) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl(Constant.BASE_URL)
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
@@ -45,7 +46,6 @@ public class AppModule {
     @Singleton
     public OkHttpClient provideOkHttpClient() {
         return new OkHttpClient.Builder()
-                // Configure OkHttpClient as needed
                 .build();
     }
 
