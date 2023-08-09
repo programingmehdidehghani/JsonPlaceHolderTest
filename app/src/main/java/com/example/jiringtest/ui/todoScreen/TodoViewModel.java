@@ -78,7 +78,7 @@ public class TodoViewModel extends ViewModel {
                         public void onError(Throwable e) {
                             isLoadingLiveData.setValue(false);
                             errorMessageLiveData.setValue(e.getMessage());
-                            Log.i("response","error is " + e.getMessage());}
+                        }
                     }));
         } else {
             errorMessageLiveData.setValue("No internet connection");
