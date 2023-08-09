@@ -68,7 +68,6 @@ public class TodoActivity extends AppCompatActivity {
             @Override
             public void onChanged(Boolean isLoading) {
                 binding.progressInTodoActivity.setVisibility(View.VISIBLE);
-                Log.i("fix error","loading call is  ");
             }
         });
 
