@@ -71,7 +71,6 @@ public class TodoViewModel extends ViewModel {
                         public void onSuccess(Response<TodoResponse> response) {
                             isLoadingLiveData.setValue(false);
                             todoResponseLiveData.setValue(response);
-                            Log.i("error","rx call iis "+ response.message());
                         }
 
                         @Override
